@@ -1,0 +1,195 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.6
+-- https://www.phpmyadmin.net/
+--
+-- 主機: localhost
+-- 產生時間： 2020-08-08 07:14:01
+-- 伺服器版本: 5.7.17-log
+-- PHP 版本： 5.6.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- 資料庫： `online_shop`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `orders`
+--
+
+create database Online_Shop default character set utf8;
+
+use Online_Shop;
+
+
+
+CREATE TABLE `orders` (
+  `oId` int(11) NOT NULL,
+  `uId` int(11) NOT NULL,
+  `uName` varchar(25) NOT NULL,
+  `Total` int(11) NOT NULL,
+  `order_Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 資料表的匯出資料 `orders`
+--
+
+INSERT INTO `orders` (`oId`, `uId`, `uName`, `Total`, `order_Date`) VALUES
+(1, 1, 'Vincent', 26900, '2020-08-08 07:02:22'),
+(2, 3, 'Kelly', 50800, '2020-08-08 07:02:22'),
+(3, 4, 'Tom', 55320, '2020-08-08 07:02:22');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `order_item`
+--
+
+CREATE TABLE `order_item` (
+  `oId` int(11) NOT NULL,
+  `uName` varchar(25) NOT NULL,
+  `pId` int(11) NOT NULL,
+  `pName` varchar(25) NOT NULL,
+  `Price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 資料表的匯出資料 `order_item`
+--
+
+INSERT INTO `order_item` (`oId`, `uName`, `pId`, `pName`, `Price`) VALUES
+(1, 'Vincent', 6, 'Acer AN515-54-56KU 15吋電競筆', 26900),
+(2, 'Kelly', 3, 'Acer A715-74G-52MV 15吋電競筆', 23900),
+(2, 'Kelly', 6, 'Acer AN515-54-56KU 15吋電競筆', 26900),
+(3, 'Tom', 2, 'Acer A315-53-P8TP 15吋筆電(4', 13900),
+(3, 'Tom', 4, 'Acer S40-10-595K 14吋筆電(i5', 19665),
+(3, 'Tom', 5, 'Acer A515-54G-5764 15吋筆電(', 21755);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `products`
+--
+
+CREATE TABLE `products` (
+  `pId` int(11) NOT NULL,
+  `pName` varchar(25) NOT NULL,
+  `Detail` varchar(100) DEFAULT NULL,
+  `Price` int(11) NOT NULL,
+  `Date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 資料表的匯出資料 `products`
+--
+
+INSERT INTO `products` (`pId`, `pName`, `Detail`, `Price`, `Date`) VALUES
+(1, 'Acer A315-55G-52YR 15吋筆電(', 'i5-10210U處理器 4G DDR4記憶體 256G+1T硬碟 搭載MX230顯卡 15.6吋 FHD霧面螢幕', 21900, '0000-00-00'),
+(2, 'Acer A315-53-P8TP 15吋筆電(4', 'A315-53-P8TP Pentium 4417U 4G/256G 15.6吋螢幕 Win10作業系統.', 13900, '0000-00-00'),
+(3, 'Acer A715-74G-52MV 15吋電競筆', 'A715-74G-52MV Intel i5-9300H 4G DDR4/1T硬碟 GTX1050-3G顯卡 15.6吋 FHD IPS\n', 23900, '0000-00-00'),
+(4, 'Acer S40-10-595K 14吋筆電(i5', 'S40-10-51QH Intel® Core™ i5-8250U Nvidia Geforce MX150 2G 256GB SSD 4G DDR4記憶體\n', 19665, '0000-00-00'),
+(5, 'Acer A515-54G-5764 15吋筆電(', 'A515-54G-5764 Intel i5-10210U 4G DDR4/256G 15.6吋 FHD IPS螢幕 窄邊框設計厚度不到1.8公分\n', 21755, '0000-00-00'),
+(6, 'Acer AN515-54-56KU 15吋電競筆', 'AN515-54-56KU Intel i5-9300H 8G DDR4/256G GTX1050顯卡 FHD IPS 120Hz螢幕\n', 26900, '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `users`
+--
+
+CREATE TABLE `users` (
+  `uId` int(11) NOT NULL,
+  `uName` varchar(25) NOT NULL,
+  `Mobile` int(10) NOT NULL,
+  `Address` varchar(35) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 資料表的匯出資料 `users`
+--
+
+INSERT INTO `users` (`uId`, `uName`, `Mobile`, `Address`) VALUES
+(1, 'Vincent', 995939390, '台中市大里區興大南街1號'),
+(2, 'Amy', 998647294, '台中市西屯區市政北二路236號'),
+(3, 'Kelly', 984929059, '台中南區忠孝路109號'),
+(4, 'Tom', 928592954, '台中市太平區環中東路四段611-1號');
+
+--
+-- 已匯出資料表的索引
+--
+
+--
+-- 資料表索引 `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`oId`),
+  ADD KEY `fk_uId` (`uId`),
+  ADD KEY `idx_oId` (`oId`);
+
+--
+-- 資料表索引 `order_item`
+--
+ALTER TABLE `order_item`
+  ADD KEY `fk_oId` (`oId`);
+
+--
+-- 資料表索引 `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`pId`);
+
+--
+-- 資料表索引 `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`uId`),
+  ADD KEY `idx_uId` (`uId`);
+
+--
+-- 在匯出的資料表使用 AUTO_INCREMENT
+--
+
+--
+-- 使用資料表 AUTO_INCREMENT `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `oId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- 使用資料表 AUTO_INCREMENT `products`
+--
+ALTER TABLE `products`
+  MODIFY `pId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- 使用資料表 AUTO_INCREMENT `users`
+--
+ALTER TABLE `users`
+  MODIFY `uId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- 已匯出資料表的限制(Constraint)
+--
+
+--
+-- 資料表的 Constraints `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`uId`) REFERENCES `users` (`uId`);
+
+--
+-- 資料表的 Constraints `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`oId`) REFERENCES `orders` (`oId`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
